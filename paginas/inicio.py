@@ -1,5 +1,7 @@
 # paginas/inicio.py
 import streamlit as st
+from streamlit_folium import folium_static
+from modules.map.etapa_1 import create_map  # Importar la función create_map
 
 def display():
     font_link = "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
@@ -27,3 +29,6 @@ def display():
         </div>
         """, unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)  # Espacio extra
+
+    st_map = create_map()
+    folium_static(st_map)
