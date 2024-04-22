@@ -15,9 +15,9 @@ def draw_route_osmnx():
     G = ox.graph_from_point((start_lat, start_lon), dist=3000, dist_type='bbox', network_type='drive')
     G = nx.compose(G, ox.graph_from_point((end_lat, end_lon), dist=3000, dist_type='bbox', network_type='drive'))
 
-    # Encontrar el nodo más cercano en la red para el inicio y el fin
-    start_node = ox.get_nearest_node(G, (start_lat, start_lon))
-    end_node = ox.get_nearest_node(G, (end_lat, end_lon))
+    # Encontrar el nodo más cercano en la red para el inicio y el fin utilizando nearest_nodes
+    start_node = ox.nearest_nodes(G, start_lon, start_lat)
+    end_node = ox.nearest_nodes(G, end_lon, end_lat)
 
     # Calcular la ruta más corta
     route = nx.shortest_path(G, start_node, end_node, weight='length')
