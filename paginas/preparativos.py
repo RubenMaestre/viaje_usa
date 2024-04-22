@@ -1,6 +1,5 @@
-# paginas/densidad.py
+# paginas/preparativos.py
 import streamlit as st
-import plotly.graph_objects as go
 
 
 def display():
