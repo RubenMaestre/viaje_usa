@@ -38,14 +38,22 @@ def display():
     # Añadir marcadores al mapa
     for idx, row in df.iterrows():
         if pd.notnull(row['latitude']) and pd.notnull(row['longitude']):
+            # Determinar el color del marcador
+            if idx == 0:
+                color = 'red'  # Primer marcador
+            elif idx == len(df) - 1:
+                color = 'red'  # Último marcador
+            else:
+                color = 'blue'  # Otros marcadores
+            
             folium.Marker(
                 location=[row['latitude'], row['longitude']],
                 popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
-                icon=folium.Icon(color='blue', icon='info-sign')
+                icon=folium.Icon(color=color, icon='info-sign')
             ).add_to(map)
 
     # Configurar columnas para centrar el mapa
-    col1, col2, col3 = st.columns([1, 6, 1])  # Ajustar el ancho de las columnas
+    col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
 
     with col2:
         folium_static(map, width=1280, height=720)  # Ajusta el tamaño del mapa
