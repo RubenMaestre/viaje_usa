@@ -56,7 +56,7 @@ def display():
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
 
     with col2:
-        folium_static(map, width=1440, height=720)  # Ajusta el tamaño del mapa
+        folium_static(map, width=1360, height=720)  # Ajusta el tamaño del mapa
 
     st.markdown("""
         <style>
