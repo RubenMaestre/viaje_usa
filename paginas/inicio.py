@@ -1,6 +1,5 @@
 # paginas/inicio.py
 import streamlit as st
-from modules.map.etapa_1 import create_map
 from streamlit_folium import folium_static
 
 def display():
@@ -29,6 +28,3 @@ def display():
         </div>
         """, unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)  # Espacio extra
-
-    map = create_map()
-    folium_static(map)
