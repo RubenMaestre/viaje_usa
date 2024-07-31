@@ -19,7 +19,7 @@ def display():
     """, unsafe_allow_html=True)
 
     # Cargar el DataFrame con los metadatos desde el archivo CSV
-    df = pd.read_csv('data/df_unido.csv')
+    df = pd.read_csv('C:/Users/34670/Desktop/python/coast_to_coast/viaje_usa/data/df_unido.csv')
 
     # Filtrar filas con el día 3 (correspondiente al número 4 en la columna 'dia')
     df_dia_3 = df[df['dia'] == 4].sort_values(by='date_time').reset_index(drop=True)
@@ -49,14 +49,19 @@ def display():
 
     # Función para obtener el índice de una imagen
     def get_index(df, file_name):
-        return df.index[df['file_name'] == file_name].tolist()[0]
+        indices = df.index[df['file_name'] == file_name].tolist()
+        if indices:
+            return indices[0]
+        else:
+            return None
 
     # Añadir líneas de ruta al mapa
     for segment in segmentos:
         start_idx = get_index(df_dia_3, segment['start'])
         end_idx = get_index(df_dia_3, segment['end'])
-        segment_coords = coordinates[start_idx:end_idx + 1]
-        folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+        if start_idx is not None and end_idx is not None:
+            segment_coords = coordinates[start_idx:end_idx + 1]
+            folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
