@@ -38,8 +38,24 @@ def display():
         ).add_to(map)
         coordinates.append((row['latitude'], row['longitude']))
 
-    # Añadir línea de ruta al mapa
-    folium.PolyLine(coordinates, color='blue', weight=2.5, opacity=1).add_to(map)
+    # Definir segmentos de la ruta con colores y modos de transporte
+    segmentos = [
+        {'start': 'BARAJAS.JPG', 'end': 'IMG_5460.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'IMG_5460.JPG', 'end': 'IMG_3600.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'IMG_3600.JPG', 'end': 'HOTELROS.JPG', 'color': 'brown', 'mode': 'TAXI'},
+        {'start': 'HOTELROS.JPG', 'end': 'IMG_5483.JPG', 'color': 'red', 'mode': 'ANDANDO'}
+    ]
+
+    # Función para obtener el índice de una imagen
+    def get_index(df, file_name):
+        return df.index[df['file_name'] == file_name].tolist()[0]
+
+    # Añadir líneas de ruta al mapa
+    for segment in segmentos:
+        start_idx = get_index(df_dia_1, segment['start'])
+        end_idx = get_index(df_dia_1, segment['end'])
+        segment_coords = coordinates[start_idx:end_idx + 1]
+        folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
