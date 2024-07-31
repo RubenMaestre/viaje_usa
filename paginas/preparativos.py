@@ -9,7 +9,7 @@ def display():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Imagen de preparativos
-    st.image('sources/preparativos.jpg', use_column_width=True)
+    st.image('sources/preparativos.JPG', use_column_width=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Texto introductorio
