@@ -25,8 +25,8 @@ def display():
     df_dia_3 = df[df['dia'] == 4].sort_values(by='date_time').reset_index(drop=True)
 
     # Crear un mapa centrado en Manhattan
-    map_center = [40.41233, -74.54609]
-    map = folium.Map(location=map_center, zoom_start=9)
+    map_center = [40.7831, -73.9712]
+    map = folium.Map(location=map_center, zoom_start=12)
 
     # Añadir marcadores al mapa
     coordinates = []
@@ -63,6 +63,8 @@ def display():
         if start_idx is not None and end_idx is not None:
             segment_coords = coordinates[start_idx:end_idx + 1]
             folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+        else:
+            st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
