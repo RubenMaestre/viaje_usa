@@ -44,7 +44,7 @@ def display():
     # Añadir marcadores al mapa
     for idx, row in df.iterrows():
         # Determinar el color del marcador
-        if idx == 2:
+        if idx == 3:
             color = 'red'  # Primer marcador
         elif idx == df.index[-1]:
             color = 'red'  # Último marcador
