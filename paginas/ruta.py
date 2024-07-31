@@ -29,7 +29,7 @@ def display():
     """, unsafe_allow_html=True)
 
     # Cargar el DataFrame con los metadatos desde el archivo Excel
-    df = pd.read_excel('data/df_unido.xlsx')
+    df = pd.read_csv('data/df_unido.csv')
 
     # Eliminar las dos primeras filas
     df = df.iloc[2:]
