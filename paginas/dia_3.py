@@ -25,8 +25,8 @@ def display():
     df_dia_3 = df[df['dia'] == 4].sort_values(by='date_time').reset_index(drop=True)
 
     # Crear un mapa centrado en Manhattan
-    map_center = [40.7831, -73.9712]
-    map = folium.Map(location=map_center, zoom_start=12)
+    map_center = [40.41233, -74.54609]
+    map = folium.Map(location=map_center, zoom_start=9)
 
     # Añadir marcadores al mapa
     coordinates = []
@@ -44,8 +44,8 @@ def display():
         {'start': 'IMG_5821.JPG', 'end': 'IMG_5836.JPG', 'color': 'green', 'mode': 'TREN'},
         {'start': 'IMG_5836.JPG', 'end': 'IMA_STATION.JPG', 'color': 'red', 'mode': 'ANDANDO'},
         {'start': 'IMA_STATION.JPG', 'end': 'IMA_PENST.JPG', 'color': 'green', 'mode': 'TREN'},
-        {'start': 'IMA_PENST.JPG', 'end': 'IMA_HTROOS.JPG', 'color': 'red', 'mode': 'ANDANDO'},
-        {'start': 'IMA_HTROOS.JPG', 'end': 'IMA_HTROOSL.JPG', 'color': 'red', 'mode': 'ANDANDO'}
+        {'start': 'IMA_PENST.JPG', 'end': 'IMG_HTROOS.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+        {'start': 'IMG_HTROOS.JPG', 'end': 'IMG_HTROOSL.JPG', 'color': 'red', 'mode': 'ANDANDO'}
     ]
 
     # Función para obtener el índice de una imagen
@@ -63,8 +63,6 @@ def display():
         if start_idx is not None and end_idx is not None:
             segment_coords = coordinates[start_idx:end_idx + 1]
             folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
-        else:
-            st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
