@@ -40,7 +40,7 @@ def display():
 
     # Definir segmentos de la ruta con colores y modos de transporte
     segmentos = [
-        {'start': 'IMG_5485.JPG', 'end': 'IMG_5486.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+        {'start': 'HOTEL.JPG', 'end': 'IMG_5486.JPG', 'color': 'red', 'mode': 'ANDANDO'},
         {'start': 'IMG_5486.JPG', 'end': 'IMG_5492.JPG', 'color': 'yellow', 'mode': 'METRO'},
         {'start': 'IMG_5492.JPG', 'end': 'IMG_5519.JPG', 'color': 'blue', 'mode': 'FERRY'},
         {'start': 'IMG_5519.JPG', 'end': 'IMG_3623.JPG', 'color': 'red', 'mode': 'ANDANDO'},
