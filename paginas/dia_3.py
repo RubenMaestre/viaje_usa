@@ -26,7 +26,7 @@ def display():
 
     # Crear un mapa centrado en Manhattan
     map_center = [40.41233, -74.54609]
-    map = folium.Map(location=map_center, zoom_start=10)
+    map = folium.Map(location=map_center, zoom_start=9)
 
     # Añadir marcadores al mapa
     coordinates = []
