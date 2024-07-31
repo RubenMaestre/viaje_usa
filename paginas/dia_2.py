@@ -19,22 +19,27 @@ def display():
     """, unsafe_allow_html=True)
 
     # Cargar el DataFrame con los metadatos desde el archivo CSV
-    df = pd.read_csv('data/df_unido.csv')
+    df = pd.read_csv('C:/Users/34670/Desktop/python/coast_to_coast/viaje_usa/data/df_unido.csv')
 
     # Filtrar filas con el día 2 (correspondiente al número 3 en la columna 'dia')
-    df_dia_2 = df[df['dia'] == 3]
+    df_dia_2 = df[df['dia'] == 3].sort_values(by='date_time').reset_index(drop=True)
 
     # Crear un mapa centrado en Manhattan
     map_center = [40.7831, -73.9712]
     map = folium.Map(location=map_center, zoom_start=12)
 
     # Añadir marcadores al mapa
+    coordinates = []
     for idx, row in df_dia_2.iterrows():
         folium.Marker(
             location=[row['latitude'], row['longitude']],
             popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
             icon=folium.Icon(color='blue', icon='info-sign')
         ).add_to(map)
+        coordinates.append((row['latitude'], row['longitude']))
+
+    # Añadir línea de ruta al mapa
+    folium.PolyLine(coordinates, color='blue', weight=2.5, opacity=1).add_to(map)
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
