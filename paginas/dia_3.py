@@ -44,7 +44,8 @@ def display():
         {'start': 'IMG_5821.JPG', 'end': 'IMG_5836.JPG', 'color': 'green', 'mode': 'TREN'},
         {'start': 'IMG_5836.JPG', 'end': 'IMA_STATION.JPG', 'color': 'red', 'mode': 'ANDANDO'},
         {'start': 'IMA_STATION.JPG', 'end': 'IMA_PENST.JPG', 'color': 'green', 'mode': 'TREN'},
-        {'start': 'IMA_PENST.JPG', 'end': 'IMA_HTROOSL.JPG', 'color': 'red', 'mode': 'ANDANDO'}
+        {'start': 'IMA_PENST.JPG', 'end': 'IMA_HTROOS.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+        {'start': 'IMA_HTROOS.JPG', 'end': 'IMA_HTROOSL.JPG', 'color': 'red', 'mode': 'ANDANDO'}
     ]
 
     # Función para obtener el índice de una imagen
