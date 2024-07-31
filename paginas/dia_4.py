@@ -61,7 +61,10 @@ def display():
         end_idx = get_index(df_dia_4, segment['end'])
         if start_idx is not None and end_idx is not None:
             segment_coords = coordinates[start_idx:end_idx + 1]
-            folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+            if segment_coords:
+                folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+            else:
+                st.write(f"Segmento vacío: {segment['start']} a {segment['end']}")
         else:
             st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
