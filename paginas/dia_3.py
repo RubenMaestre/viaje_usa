@@ -19,7 +19,7 @@ def display():
     """, unsafe_allow_html=True)
 
     # Cargar el DataFrame con los metadatos desde el archivo CSV
-    df = pd.read_csv('C:/Users/34670/Desktop/python/coast_to_coast/viaje_usa/data/df_unido.csv')
+    df = pd.read_csv('data/df_unido.csv')
 
     # Filtrar filas con el día 3 (correspondiente al número 4 en la columna 'dia')
     df_dia_3 = df[df['dia'] == 4].sort_values(by='date_time').reset_index(drop=True)
