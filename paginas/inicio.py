@@ -24,7 +24,7 @@ def display():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Crear columnas
-    col1, col2, col3 = st.columns([1.8, 0.2, 3])
+    col1, col2, col3 = st.columns([2, 0.1, 3])
 
     with col1:
         # Introducción descriptiva y explicación del proyecto
