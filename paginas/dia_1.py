@@ -24,9 +24,9 @@ def display():
     # Filtrar filas con el día 1 (correspondiente al número 2 en la columna 'dia')
     df_dia_1 = df[df['dia'] == 2]
 
-    # Crear un mapa centrado en Manhattan
-    map_center = [40.7831, -73.9712]
-    map = folium.Map(location=map_center, zoom_start=12)
+    # Crear un mapa centrado en medio del Atlántico
+    map_center = [40.0, -30.0]
+    map = folium.Map(location=map_center, zoom_start=3)
 
     # Añadir marcadores al mapa
     for idx, row in df_dia_1.iterrows():
