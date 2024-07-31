@@ -24,7 +24,7 @@ def display():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Crear columnas
-    col1, col2 = st.columns([1, 2])
+    col1, col2, col3 = st.columns([1.8, 0.2, 3])
 
     with col1:
         # Introducción descriptiva y explicación del proyecto
@@ -46,7 +46,7 @@ def display():
             </div>
         """, unsafe_allow_html=True)
 
-    with col2:
+    with col3:
         # Imagen del proyecto
         st.image('sources/coast_to_coast.jpg', use_column_width=True)
 
