@@ -24,7 +24,7 @@ def display():
     # Filtrar filas con el día 1 (correspondiente al número 2 en la columna 'dia')
     df_dia_1 = df[df['dia'] == 2].sort_values(by='date_time').reset_index(drop=True)
 
-    # Crear un mapa centrado en medio del Atlántico
+    # Crear un mapa centrado en el Atlántico
     map_center = [40.0, -30.0]
     map = folium.Map(location=map_center, zoom_start=3)
 
@@ -46,6 +46,16 @@ def display():
 
     with col2:
         folium_static(map, width=1360, height=720)  # Ajusta el tamaño del mapa
+
+    # Añadir leyenda debajo del mapa
+    st.markdown("""
+        <div style='text-align: center; font-size: 18px;'>
+            <b>Leyenda</b><br>
+            <span style='color: pink;'>■</span> Avión<br>
+            <span style='color: brown;'>■</span> Taxi<br>
+            <span style='color: red;'>■</span> Andando<br>
+        </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("""
         <style>
