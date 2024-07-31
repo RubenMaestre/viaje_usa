@@ -18,8 +18,8 @@ def display():
         <br><br>
     """, unsafe_allow_html=True)
 
-    # Cargar el DataFrame con los metadatos desde el archivo Excel
-    df = pd.read_excel('data/df_unido.xlsx')
+    # Cargar el DataFrame con los metadatos desde el archivo CSV
+    df = pd.read_csv('data/df_unido.csv')
 
     # Filtrar filas con el día 2 (correspondiente al número 3 en la columna 'dia')
     df_dia_2 = df[df['dia'] == 3]
