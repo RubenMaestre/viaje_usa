@@ -22,19 +22,24 @@ def display():
     df = pd.read_csv('data/df_unido.csv')
 
     # Filtrar filas con el día 1 (correspondiente al número 2 en la columna 'dia')
-    df_dia_1 = df[df['dia'] == 2]
+    df_dia_1 = df[df['dia'] == 2].sort_values(by='date_time').reset_index(drop=True)
 
     # Crear un mapa centrado en medio del Atlántico
     map_center = [40.0, -30.0]
     map = folium.Map(location=map_center, zoom_start=3)
 
     # Añadir marcadores al mapa
+    coordinates = []
     for idx, row in df_dia_1.iterrows():
         folium.Marker(
             location=[row['latitude'], row['longitude']],
             popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
             icon=folium.Icon(color='blue', icon='info-sign')
         ).add_to(map)
+        coordinates.append((row['latitude'], row['longitude']))
+
+    # Añadir línea de ruta al mapa
+    folium.PolyLine(coordinates, color='blue', weight=2.5, opacity=1).add_to(map)
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
