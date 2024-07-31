@@ -28,8 +28,14 @@ def display():
         <br><br>
     """, unsafe_allow_html=True)
 
-    # Cargar el DataFrame con los metadatos
-    df = pd.read_csv('data/metadata.csv')
+    # Cargar el DataFrame con los metadatos desde el archivo Excel
+    df = pd.read_excel('data/df_unido.xlsx')
+
+    # Eliminar las dos primeras filas
+    df = df.iloc[2:]
+
+    # Filtrar filas con coordenadas no nulas
+    df = df.dropna(subset=['latitude', 'longitude'])
 
     # Crear un mapa centrado en los EE. UU.
     map_center = [39.8283, -98.5795]
@@ -37,20 +43,19 @@ def display():
 
     # Añadir marcadores al mapa
     for idx, row in df.iterrows():
-        if pd.notnull(row['latitude']) and pd.notnull(row['longitude']):
-            # Determinar el color del marcador
-            if idx == 0:
-                color = 'red'  # Primer marcador
-            elif idx == len(df) - 1:
-                color = 'red'  # Último marcador
-            else:
-                color = 'blue'  # Otros marcadores
-            
-            folium.Marker(
-                location=[row['latitude'], row['longitude']],
-                popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
-                icon=folium.Icon(color=color, icon='info-sign')
-            ).add_to(map)
+        # Determinar el color del marcador
+        if idx == 2:
+            color = 'red'  # Primer marcador
+        elif idx == df.index[-1]:
+            color = 'red'  # Último marcador
+        else:
+            color = 'blue'  # Otros marcadores
+        
+        folium.Marker(
+            location=[row['latitude'], row['longitude']],
+            popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
+            icon=folium.Icon(color=color, icon='info-sign')
+        ).add_to(map)
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
@@ -69,4 +74,3 @@ def display():
 
 # Llamar a la función display para mostrar la página
 display()
-
