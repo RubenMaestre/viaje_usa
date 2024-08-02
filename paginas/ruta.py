@@ -127,7 +127,14 @@ def display():
         # Día 7
         {'start': 'IMG_3817.JPG', 'end': 'IMG_6360.JPG', 'color': 'blue', 'mode': 'COCHE'},
         {'start': 'IMG_6360.JPG', 'end': 'IMG_3885.JPG', 'color': 'red', 'mode': 'ANDANDO'},
-        {'start': 'IMG_3885.JPG', 'end': 'IMG_TOLEDO.JPG', 'color': 'blue', 'mode': 'COCHE'}
+        {'start': 'IMG_3885.JPG', 'end': 'IMG_TOLEDO.JPG', 'color': 'blue', 'mode': 'COCHE'},
+
+        # Día 8
+        {'start': 'IMG_6440.JPG', 'end': 'IMG_HOTCHI.JPG', 'color': 'blue', 'mode': 'COCHE'},
+        {'start': 'IMG_HOTCHI.JPG', 'end': 'IMG_6500.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+        {'start': 'IMG_6500.JPG', 'end': 'IMG_6511.JPG', 'color': 'yellow', 'mode': 'METRO'},
+        {'start': 'IMG_6511.JPG', 'end': 'IMG_6612.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+        {'start': 'IMG_6612.JPG', 'end': 'IMG_HOTCHIC.JPG', 'color': 'brown', 'mode': 'TAXI'}
     ]
 
     # Función para obtener el índice de una imagen
