@@ -36,7 +36,7 @@ def display():
     df_dia_2 = df[df['dia'] == 3].sort_values(by='date_time').reset_index(drop=True)
 
     # Crear un mapa centrado en Manhattan
-    map_center = [40.7831, -73.9712]
+    map_center = [40.71850, -74.00442]
     map = folium.Map(location=map_center, zoom_start=12)
 
     # Añadir marcadores al mapa
