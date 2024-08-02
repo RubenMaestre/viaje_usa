@@ -31,9 +31,6 @@ def display():
     # Cargar el DataFrame con los metadatos desde el archivo CSV
     df = pd.read_csv('data/df_unido.csv')
 
-    # Eliminar las dos primeras filas
-    df = df.iloc[2:]
-
     # Filtrar filas con coordenadas no nulas
     df = df.dropna(subset=['latitude', 'longitude'])
 
