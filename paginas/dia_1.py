@@ -4,6 +4,7 @@ import pandas as pd
 import folium
 from streamlit_folium import folium_static
 import base64
+import os
 
 def display():
     # Título de la página
@@ -33,15 +34,20 @@ def display():
     coordinates = []
     for idx, row in df_dia_1.iterrows():
         if row['foto'] == 'SI':
-            # Cargar la imagen
-            encoded = base64.b64encode(open(f'sources/fotos/{row["enlace"]}', 'rb').read()).decode()
-            html = f"""
-            <h4>{row['descripcion']}</h4>
-            <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
-            <br>{row['date_time']}
-            """
-            iframe = folium.IFrame(html, width=320, height=320)
-            popup = folium.Popup(iframe, max_width=320)
+            # Construir la ruta del archivo de imagen y convertirla a minúsculas
+            image_path = os.path.join('sources/fotos', row["enlace"].lower())
+            if os.path.exists(image_path):
+                # Cargar la imagen
+                encoded = base64.b64encode(open(image_path, 'rb').read()).decode()
+                html = f"""
+                <h4>{row['descripcion']}</h4>
+                <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
+                <br>{row['date_time']}
+                """
+                iframe = folium.IFrame(html, width=320, height=320)
+                popup = folium.Popup(iframe, max_width=320)
+            else:
+                popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
         else:
             popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
         
