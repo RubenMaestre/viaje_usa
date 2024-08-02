@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
+import base64
 
 def display():
     # Título de la página
@@ -31,31 +32,55 @@ def display():
     # Añadir marcadores al mapa
     coordinates = []
     for idx, row in df_dia_1.iterrows():
+        if row['foto'] == 'SI':
+            # Cargar la imagen
+            encoded = base64.b64encode(open(f'sources/fotos/{row["enlace"]}', 'rb').read()).decode()
+            html = f"""
+            <h4>{row['descripcion']}</h4>
+            <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
+            <br>{row['date_time']}
+            """
+            iframe = folium.IFrame(html, width=320, height=320)
+            popup = folium.Popup(iframe, max_width=320)
+        else:
+            popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
+        
         folium.Marker(
             location=[row['latitude'], row['longitude']],
-            popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
+            popup=popup,
             icon=folium.Icon(color='blue', icon='info-sign')
         ).add_to(map)
         coordinates.append((row['latitude'], row['longitude']))
 
     # Definir segmentos de la ruta con colores y modos de transporte
     segmentos = [
-        {'start': 'BARAJAS.JPG', 'end': 'IMG_5460.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
-        {'start': 'IMG_5460.JPG', 'end': 'IMG_3600.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'BARAJAS.JPG', 'end': 'LONDRES.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'LONDRES.JPG', 'end': 'IMG_3600.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
         {'start': 'IMG_3600.JPG', 'end': 'HOTELROS.JPG', 'color': 'brown', 'mode': 'TAXI'},
         {'start': 'HOTELROS.JPG', 'end': 'IMG_5483.JPG', 'color': 'red', 'mode': 'ANDANDO'}
     ]
 
     # Función para obtener el índice de una imagen
     def get_index(df, file_name):
-        return df.index[df['file_name'] == file_name].tolist()[0]
+        indices = df.index[df['file_name'] == file_name].tolist()
+        if indices:
+            return indices[0]
+        else:
+            st.write(f"Archivo no encontrado: {file_name}")
+            return None
 
     # Añadir líneas de ruta al mapa
     for segment in segmentos:
         start_idx = get_index(df_dia_1, segment['start'])
         end_idx = get_index(df_dia_1, segment['end'])
-        segment_coords = coordinates[start_idx:end_idx + 1]
-        folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+        if start_idx is not None and end_idx is not None:
+            segment_coords = coordinates[start_idx:end_idx + 1]
+            if segment_coords:
+                folium.PolyLine(segment_coords, color=segment['color'], weight=2.5, opacity=1).add_to(map)
+            else:
+                st.write(f"Segmento vacío: {segment['start']} a {segment['end']}")
+        else:
+            st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
     col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
@@ -67,9 +92,9 @@ def display():
     st.markdown("""
         <div style='text-align: center; font-size: 18px;'>
             <b>Leyenda</b><br>
+            <span style='color: red;'>■</span> Andando<br>
             <span style='color: pink;'>■</span> Avión<br>
             <span style='color: brown;'>■</span> Taxi<br>
-            <span style='color: red;'>■</span> Andando<br>
         </div>
     """, unsafe_allow_html=True)
 
