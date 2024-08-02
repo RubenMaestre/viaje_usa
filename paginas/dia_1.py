@@ -93,20 +93,25 @@ def display():
             st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
-    col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
+    col1, col2 = st.columns([1.5, 8.5])  # Ajustar el ancho de las columnas
 
     with col2:
         folium_static(map, width=1360, height=720)  # Ajusta el tamaño del mapa
 
-    # Añadir leyenda debajo del mapa
-    st.markdown("""
-        <div style='text-align: center; font-size: 18px;'>
-            <b>Leyenda</b><br>
-            <span style='color: red;'>■</span> Andando<br>
-            <span style='color: pink;'>■</span> Avión<br>
-            <span style='color: brown;'>■</span> Taxi<br>
-        </div>
-    """, unsafe_allow_html=True)
+    # Añadir leyenda en la columna izquierda
+    with col1:
+        st.markdown("""
+            <div style='text-align: center; font-size: 18px;'>
+                <b>Leyenda</b><br>
+                <span style='color: red;'>■</span> Andando<br>
+                <span style='color: pink;'>■</span> Avión<br>
+                <span style='color: brown;'>■</span> Taxi<br>
+                <br>
+                <b>Marcadores</b><br>
+                <span style='color: red;'>■</span> Con Foto<br>
+                <span style='color: blue;'>■</span> Sin Foto<br>
+            </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("""
         <style>
