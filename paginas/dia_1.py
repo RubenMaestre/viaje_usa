@@ -20,6 +20,14 @@ def display():
         <br><br>
     """, unsafe_allow_html=True)
 
+    # Añadir texto para interactuar con el mapa
+    st.markdown("""
+        <div style='text-align: justify; font-size: 18px;'>
+            Amplía el mapa o desplázate por él para conocer nuestra ruta de este día.
+        </div>
+        <br><br>
+    """, unsafe_allow_html=True)
+
     # Cargar el DataFrame con los metadatos desde el archivo CSV
     df = pd.read_csv('data/df_unido.csv')
 
@@ -93,15 +101,15 @@ def display():
             st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
-    col1, col2 = st.columns([1.5, 8.5])  # Ajustar el ancho de las columnas
+    col1, col2 = st.columns([1, 9])  # Ajustar el ancho de las columnas
 
     with col2:
-        folium_static(map, width=1360, height=720)  # Ajusta el tamaño del mapa
+        folium_static(map, width=1080, height=720)  # Ajusta el tamaño del mapa
 
     # Añadir leyenda en la columna izquierda
     with col1:
         st.markdown("""
-            <div style='text-align: center; font-size: 18px;'>
+            <div style='text-align: left; font-size: 18px;'>
                 <b>Leyenda</b><br>
                 <span style='color: red;'>■</span> Andando<br>
                 <span style='color: pink;'>■</span> Avión<br>
