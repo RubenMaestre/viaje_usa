@@ -23,7 +23,8 @@ def display():
     # Añadir texto para interactuar con el mapa
     st.markdown("""
         <div style='text-align: justify; font-size: 18px;'>
-            Amplía el mapa o desplázate por él para conocer nuestra ruta de este día.
+            Amplía el mapa o desplázate por él para conocer nuestra ruta de este día. Los marcadores en rojo del mapa contienen fotografía e información sobre la imagen. 
+            Los marcadores azules indican que estuvimos en ese lugar a la hora y fecha indicada.
         </div>
         <br><br>
     """, unsafe_allow_html=True)
