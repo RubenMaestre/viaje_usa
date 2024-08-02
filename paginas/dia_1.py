@@ -46,16 +46,19 @@ def display():
                 """
                 iframe = folium.IFrame(html, width=320, height=320)
                 popup = folium.Popup(iframe, max_width=320)
+                color = 'red'
             else:
                 st.write(f"Archivo de imagen no encontrado: {image_path}")
                 popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
+                color = 'blue'
         else:
             popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
+            color = 'blue'
         
         folium.Marker(
             location=[row['latitude'], row['longitude']],
             popup=popup,
-            icon=folium.Icon(color='blue', icon='info-sign')
+            icon=folium.Icon(color=color, icon='info-sign')
         ).add_to(map)
         coordinates.append((row['latitude'], row['longitude']))
 
