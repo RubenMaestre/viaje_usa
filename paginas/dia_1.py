@@ -34,13 +34,11 @@ def display():
     coordinates = []
     for idx, row in df_dia_1.iterrows():
         if row['foto'] == 'SI':
-            # Convertir el nombre del archivo a minúsculas
-            file_name = row["enlace"].lower()
-            image_path = os.path.join('sources/fotos', file_name)
+            # Construir la ruta del archivo de imagen
+            image_path = os.path.join('sources/fotos', row["enlace"])
             if os.path.exists(image_path):
                 # Cargar la imagen
-                with open(image_path, 'rb') as img_file:
-                    encoded = base64.b64encode(img_file.read()).decode()
+                encoded = base64.b64encode(open(image_path, 'rb').read()).decode()
                 html = f"""
                 <h4>{row['descripcion']}</h4>
                 <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
