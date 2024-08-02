@@ -34,11 +34,13 @@ def display():
     coordinates = []
     for idx, row in df_dia_1.iterrows():
         if row['foto'] == 'SI':
-            # Construir la ruta del archivo de imagen y convertirla a minúsculas
-            image_path = os.path.join('sources/fotos', row["enlace"].lower())
+            # Convertir el nombre del archivo a minúsculas
+            file_name = row["enlace"].lower()
+            image_path = os.path.join('sources/fotos', file_name)
             if os.path.exists(image_path):
                 # Cargar la imagen
-                encoded = base64.b64encode(open(image_path, 'rb').read()).decode()
+                with open(image_path, 'rb') as img_file:
+                    encoded = base64.b64encode(img_file.read()).decode()
                 html = f"""
                 <h4>{row['descripcion']}</h4>
                 <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
@@ -47,6 +49,7 @@ def display():
                 iframe = folium.IFrame(html, width=320, height=320)
                 popup = folium.Popup(iframe, max_width=320)
             else:
+                st.write(f"Archivo de imagen no encontrado: {image_path}")
                 popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
         else:
             popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
