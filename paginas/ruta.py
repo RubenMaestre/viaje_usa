@@ -84,10 +84,11 @@ def display():
     # Definir todos los segmentos de la ruta con colores y modos de transporte
     segmentos = [
         # Día 1
-        {'start': 'BARAJAS.JPG', 'end': 'IMG_5460.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
-        {'start': 'IMG_5460.JPG', 'end': 'IMG_3600.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'BARAJAS.JPG', 'end': 'LONDRES.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
+        {'start': 'LONDRES.JPG', 'end': 'IMG_3600.JPG', 'color': 'pink', 'mode': 'AVIÓN'},
         {'start': 'IMG_3600.JPG', 'end': 'HOTELROS.JPG', 'color': 'brown', 'mode': 'TAXI'},
         {'start': 'HOTELROS.JPG', 'end': 'IMG_5483.JPG', 'color': 'red', 'mode': 'ANDANDO'},
+
 
         # Día 2
         {'start': 'HOTEL.JPG', 'end': 'IMG_5486.JPG', 'color': 'red', 'mode': 'ANDANDO'},
