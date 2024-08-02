@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import folium
 from streamlit_folium import folium_static
+import base64
+import os
 
 def display():
     # Título de la página
@@ -14,6 +16,15 @@ def display():
         <div style='text-align: justify; font-size: 18px;'>
             Este es el mapa de la ruta correspondiente al Día 4 de nuestro viaje. 
             Las siguientes paradas reflejan los momentos y lugares que visitamos el cuarto día.
+        </div>
+        <br><br>
+    """, unsafe_allow_html=True)
+
+    # Añadir texto para interactuar con el mapa
+    st.markdown("""
+        <div style='text-align: justify; font-size: 18px;'>
+            Amplía el mapa o desplázate por él para conocer nuestra ruta de este día. Los marcadores en rojo del mapa contienen fotografía e información sobre la imagen. 
+            Los marcadores azules indican que estuvimos en ese lugar a la hora y fecha indicada.
         </div>
         <br><br>
     """, unsafe_allow_html=True)
@@ -31,10 +42,32 @@ def display():
     # Añadir marcadores al mapa
     coordinates = []
     for idx, row in df_dia_4.iterrows():
+        if row['foto'] == 'SI':
+            # Construir la ruta del archivo de imagen
+            image_path = os.path.join('sources/fotos', row["enlace"])
+            if os.path.exists(image_path):
+                # Cargar la imagen
+                encoded = base64.b64encode(open(image_path, 'rb').read()).decode()
+                html = f"""
+                <h4>{row['descripcion']}</h4>
+                <img src="data:image/jpeg;base64,{encoded}" width="300" height="200">
+                <br>{row['date_time']}
+                """
+                iframe = folium.IFrame(html, width=320, height=320)
+                popup = folium.Popup(iframe, max_width=320)
+                color = 'red'
+            else:
+                st.write(f"Archivo de imagen no encontrado: {image_path}")
+                popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
+                color = 'blue'
+        else:
+            popup = folium.Popup(f"<b>{row['file_name']}</b><br>{row['date_time']}", max_width=250)
+            color = 'blue'
+        
         folium.Marker(
             location=[row['latitude'], row['longitude']],
-            popup=f"<b>{row['file_name']}</b><br>{row['date_time']}",
-            icon=folium.Icon(color='blue', icon='info-sign')
+            popup=popup,
+            icon=folium.Icon(color=color, icon='info-sign')
         ).add_to(map)
         coordinates.append((row['latitude'], row['longitude']))
 
@@ -53,6 +86,7 @@ def display():
         if indices:
             return indices[0]
         else:
+            st.write(f"Archivo no encontrado: {file_name}")
             return None
 
     # Añadir líneas de ruta al mapa
@@ -69,20 +103,25 @@ def display():
             st.write(f"Segmento no encontrado: {segment['start']} a {segment['end']}")
 
     # Configurar columnas para centrar el mapa
-    col1, col2, col3 = st.columns([0.1, 7.8, 0.1])  # Ajustar el ancho de las columnas
+    col1, col2 = st.columns([1, 9])  # Ajustar el ancho de las columnas
 
     with col2:
-        folium_static(map, width=1360, height=720)  # Ajusta el tamaño del mapa
+        folium_static(map, width=1080, height=720)  # Ajusta el tamaño del mapa
 
-    # Añadir leyenda debajo del mapa
-    st.markdown("""
-        <div style='text-align: center; font-size: 18px;'>
-            <b>Leyenda</b><br>
-            <span style='color: red;'>■</span> Andando<br>
-            <span style='color: green;'>■</span> Tren<br>
-            <span style='color: brown;'>■</span> Taxi<br>
-        </div>
-    """, unsafe_allow_html=True)
+    # Añadir leyenda en la columna izquierda
+    with col1:
+        st.markdown("""
+            <div style='text-align: left; font-size: 18px;'>
+                <b>Leyenda</b><br>
+                <span style='color: red;'>■</span> Andando<br>
+                <span style='color: green;'>■</span> Tren<br>
+                <span style='color: brown;'>■</span> Taxi<br>
+                <br>
+                <b>Marcadores</b><br>
+                <span style='color: red;'>■</span> Con Foto<br>
+                <span style='color: blue;'>■</span> Sin Foto<br>
+            </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("""
         <style>
